@@ -13,15 +13,15 @@
 
 2) 첨부파일 게시판 
 일반 게시판에 첨부파일(여러 개) 기능을 추가한 게시판입니다.
-첨부파일은 filepond라는 자바스크립트 파일첨부 라이브러리를 활용했습니다.
+첨부파일은 <a href="https://github.com/pqina/filepond">filepond</a>라는 자바스크립트 파일첨부 라이브러리를 활용했습니다.
 덕분에 구현부가 단순해지고 보기 좋은(?) 첨부파일 기능이 제공됩니다(대신에 파일 첨부가 약간 수정되었습니다).
 
 3) 그리드 게시판
 일반 게시판의 게시판 목록을 자바스크립트 그리드로 바꾼 버전입니다(목록을 두 번 클릭하여 게시물 내용을 봅니다).
 DB에서 페이징을 하지 않고 그리드의 클라이언트-사이드 페이징 기능을 이용합니다. 
-그리드 라이브러리는 ag-Grid를 사용합니다.
+그리드 라이브러리는 <a href="https://www.ag-grid.com/">ag-Grid</a>를 사용합니다.
 
-**기타사항
+<b>기타사항</b>
 
 0) 페이지 디자인은 무시합니다.
 
@@ -30,23 +30,18 @@ DB에서 페이징을 하지 않고 그리드의 클라이언트-사이드 페�
 globals.properties에서 데이터베이스 연결정보를 설정합니다.
 MyBatis를 사용하고 mapper인터페이스 구현 예제를 일부 포함시켰습니다.
 
-2) 페이징은 전자정부프레임워크의 페이징 인터페이스와 클래스를 이용합니다.
-
-<a href="http://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:ptl:view:paginationtag&s[]=pagination">도움말</a>
+2) 페이징은 전자정부프레임워크의 페이징 인터페이스와 클래스를 이용합니다.<a href="http://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:ptl:view:paginationtag&s[]=pagination">[관련 도움말]</a>
 
 ImagePaginationRenderer를 구현예제로 추가했습니다.
 
-3) 유일키는 전자정부프레임워크의 유일키 생성 부분을 이용합니다.
-
-http://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:id_generation&s[]=id&s[]=generation
+3) 유일키는 전자정부프레임워크의 유일키 생성 부분을 이용합니다. <a href="http://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:id_generation&s[]=id&s[]=generation">[관련 도움말]</a>
 
 채번 테이블(T_SEQ_MASTER)을 사용하고 10개씩 캐싱합니다.
 
 4) 세션 기반의 인증으로 인터셉터를 사용합니다.
 
-5) 빈 유효성 검사를 단순하게 적용합니다(@Valid).
+5) 빈 유효성 검사를 단순하게 적용합니다(@Valid). <a href="http://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:ptl:validation">[관련 도움말]</a>
 
-http://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:ptl:validation 
 
 6) 스프링 설정은 전자정부프레임워크이 권장(?)하는 XML로 합니다.
 
@@ -60,7 +55,7 @@ http://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:ptl:validation
 STS 4부터는 legacy Spring MVC가 지원되지 않습니다. 
 이 예제는 STS 3.8.4과 오라클 JDK 1.8.0_162에서 만들어졌습니다. Servlet 버전은 2.5입니다.
 
-**사용법
+<b>사용법</b>
 
 Sign-up 화면에서 사용자등록 후 로그인해서 게시판에 글을 씁니다.
 
