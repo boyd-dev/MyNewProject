@@ -1,0 +1,93 @@
+@CHARSET "UTF-8";
+
+body {font-size:100%;}
+
+button {outline:0; height:30px;border-style:solid;color:white;font-size:14px;background:#464646;cursor:pointer;}
+
+
+select, input[type="text"] {
+	outline:0;
+	margin-bottom: 10px;
+	height:24px;
+	border-color: #d8d8d8;
+	border-style: solid;
+	border-width: 1px;
+	padding-left: 5px;
+	padding-right: 5px;
+	/* box-sizing: border-box; */
+}
+
+input[type="button"] {
+	cursor: pointer;
+}
+
+.input_title { width: 90%; width: -webkit-fill-available;}
+
+.error_msg {
+	color: red;
+	font-size: small;
+}
+
+
+.table-line {
+	border-top: #1A90D8 2px solid;
+	border-bottom: #BABABA 1px solid;
+	border-collapse: collapse;
+}
+.table-line thead th {
+	border-bottom: #A3A3A3 1px solid;
+	padding-left:2;
+	padding-right:2;
+	background-color: #E4EAF8;
+	height:30px;
+}
+
+.table-file-line {
+	border-top: #1A90D8 2px solid;
+	border-bottom: #1A90D8 1px solid;
+	border-collapse: collapse;
+}
+
+.table-file-line thead th {
+	border-bottom: #1A90D8 1px solid;
+	padding-left:2;
+	padding-right:2;
+	background-color: #408080;
+	height:26px;
+	color: white;
+}
+
+.img-icon-download {
+	height: 24px;
+	width: 24px;
+}
+
+div.pagination {
+	padding-top: 10px;
+	font-family: consolas, serif;
+}
+.img-page {
+	height: 14px;
+	width: 14px;
+}
+
+/*login*/
+section.main {display:block; width:90%; position:absolute; margin-top:40px; text-align:center;}
+section.main form {position:relative; display:inline-block; text-align:left; width:334px; margin-top:40px; margin-left: 10px;}
+section.main form .inputbox {margin-bottom:8px;}
+section.main form label {display:inline-block; width:80px; height:34px; line-height:34px; font-size:16px; color:#343434; text-align:left;}
+section.main form .input_text {box-sizing:border-box; width:200px; height:34px; border-radius:3px; padding:0 10px; font-size:16px; color:black; border: 1px solid #ccc; vertical-align:top; transition:all 0.2s;}
+section.main form .input_text:focus {border:1px solid #666;}
+section.main form .login {font-weight: bold;}
+section.main form .login:hover {background:#ffff80;}
+
+
+/*signup*/
+section.signup{display:block; width:90%; position:absolute; margin-top:40px; text-align:center;}
+section.signup form {position:relative; display:inline-block; text-align:left; width:334px; margin-top:40px; margin-left: 10px;}
+section.signup form .inputbox{margin-bottom:6px;}
+section.signup form .inputpwbox{margin-bottom:12px;}
+section.signup form label{display:inline-block; width:140px; height:34px; line-height:34px; font-size:16px; color:#343434; text-align:left;}
+section.signup form .input_text{box-sizing:border-box; width:200px; height:34px; border-radius:3px; padding:0 10px; font-size:16px; color:black; border: 1px solid #ccc; vertical-align:top; transition:all 0.2s;}
+section.signup form .input_text:focus{border:1px solid #666;}
+

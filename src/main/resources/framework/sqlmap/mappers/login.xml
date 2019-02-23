@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Login">
+
+    <resultMap id="login" type="loginVO">
+		<result property="mberId"     column="MBER_ID" />
+		<result property="passwd"     column="PASSWORD"/>
+		<result property="mberNm"     column="MBER_NM"/>
+	</resultMap>
+
+    <select id="actionLogin" parameterType="loginVO" resultMap="login">
+	       <![CDATA[
+			SELECT
+			      MBER_ID
+	             ,PASSWORD
+	             ,PASSWORD_HINT
+	             ,MBER_NM
+	             ,DEL_YN
+			  FROM T_MEMBER
+			 WHERE MBER_ID = #{mberId}
+			   AND PASSWORD = #{passwd}
+			   AND DEL_YN = 'N'
+			]]>
+    </select>
+
+
+</mapper>
+
+
+

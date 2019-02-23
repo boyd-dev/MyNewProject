@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+
+    <settings>
+         <setting name="jdbcTypeForNull" value="VARCHAR"/>
+         <setting name="cacheEnabled" value="false"/>
+         <setting name="callSettersOnNulls" value="false"/>
+         <!-- setting name="mapUnderscoreToCamelCase" value="true"/-->
+
+    </settings>
+
+    <typeAliases>
+        <typeAlias alias="loginVO" type="com.foo.myapp.login.service.LoginVO"/>
+		<typeAlias alias="boardVO" type="com.foo.myapp.board.service.BoardVO"/>
+		<typeAlias alias="fileVO" type="com.foo.myapp.common.file.service.FileVO"/>
+		<typeAlias alias="atchFileVO" type="com.foo.myapp.common.file.service.AtchFileVO"/>
+        <typeAlias alias="searchBoardVO" type="com.foo.myapp.board.service.SearchBoardVO"/>
+
+    </typeAliases>
+
+
+</configuration>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="File">
+
+
+     <resultMap id="fileList" type="fileVO">
+		<result property="fileId"        column="FILE_ID" />
+		<result property="atchFileId"    column="ATCH_FILE_ID"/>
+		<result property="orignlFileNm"  column="ORIGNL_FILE_NM" />
+		<result property="fileExtsn"     column="FILE_EXTSN"/>
+		<result property="fileSize"      column="FILE_SIZE"/>
+	</resultMap>
+
+
+	<resultMap id="fileInfo" type="fileVO">
+		<result property="fileId"         column="FILE_ID" />
+		<result property="atchFileId"     column="ATCH_FILE_ID"/>
+		<result property="fileStreCours"  column="FILE_STRE_COURS" />
+		<result property="streFileNm"     column="STRE_FILE_NM"/>
+		<result property="orignlFileNm"   column="ORIGNL_FILE_NM"/>
+		<result property="fileExtsn"      column="FILE_EXTSN"/>
+		<result property="fileSize"       column="FILE_SIZE"/>
+	</resultMap>
+
+    <insert id="insertFile" parameterType="fileVO">
+        INSERT INTO T_FILE (
+            FILE_ID,
+	        ATCH_FILE_ID,
+	        FILE_STRE_COURS,
+	        STRE_FILE_NM,
+	        ORIGNL_FILE_NM,
+	        FILE_EXTSN,
+	        FILE_SIZE,
+	        INST_TM,
+	        INST_ID,
+	        UPDT_TM,
+	        UPDT_ID
+        ) VALUES (
+            #{fileId},
+	        NULL,
+	        #{fileStreCours},
+	        #{streFileNm},
+	        #{orignlFileNm},
+	        #{fileExtsn},
+	        #{fileSize},
+	        NOW(),
+	        #{uploadUserId},
+	        NOW(),
+	        #{uploadUserId}
+        )
+
+    </insert>
+
+    <update id="updateFileAttchId" parameterType="atchFileVO">
+
+        UPDATE T_FILE
+           SET ATCH_FILE_ID = #{atchFileId}
+         WHERE FILE_ID IN
+            <foreach item="item" index="i" collection="fileIds" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+    </update>
+
+    <select id="selectFileList" parameterType="atchFileVO" resultMap="fileList">
+        SELECT
+            FILE_ID,
+	        ATCH_FILE_ID,
+	        ORIGNL_FILE_NM,
+	        FILE_EXTSN,
+	        FILE_SIZE
+          FROM T_FILE
+         WHERE ATCH_FILE_ID = #{atchFileId}
+    </select>
+
+    <select id="selectFile" parameterType="fileVO" resultMap="fileInfo">
+        SELECT
+             FILE_ID,
+	         ATCH_FILE_ID,
+	         FILE_STRE_COURS,
+	         STRE_FILE_NM,
+	         ORIGNL_FILE_NM,
+	         FILE_EXTSN,
+	         FILE_SIZE
+          FROM T_FILE
+         WHERE FILE_ID = #{fileId}
+    </select>
+
+    <delete id="deleteFile" parameterType="fileVO">
+        DELETE FROM T_FILE
+         WHERE FILE_ID = #{fileId}
+    </delete>
+
+</mapper>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+                 "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+
+<!-- 게시판 하단 페이지 번호를 보여주기 위한 커스텀 태그 -->
+<!-- PagingTag.java 에서 구현 -->
+
+<taglib>
+    <tlib-version>1.0</tlib-version>
+    <jsp-version>1.2</jsp-version>
+    <short-name>ui</short-name>
+    <uri>http://foo.com/tag</uri><!-- 태그를 식별하는 유일한 이름, 실제 URL은 아니다. -->
+    <display-name>UI</display-name>
+    <description>UI Tag Library</description>
+
+    <tag>
+        <name>pagination</name>
+        <tag-class>com.foo.myapp.tag.PagingTag</tag-class>
+
+        <body-content>empty</body-content>
+        <description>Pagination Tag</description>
+        <attribute>
+            <name>paginationInfo</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue><!-- 페이지가 실행될 때 만들어진다 -->
+        </attribute>
+        <attribute>
+            <name>type</name>
+            <required>false</required><!-- 페이지 태그의 형태, 필수가 아니라고 해도 된다 -->
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>jsFunction</name>
+            <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+</taglib>

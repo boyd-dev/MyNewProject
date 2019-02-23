@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+    	                http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource-mysql"/>
+	</bean>
+
+    <!-- 선언적 트랜잭션 관리, aspectj, spring-aspects가 dependency에 설정되어 있어야 한다 -->
+    <!-- Declarative Transaction Management -->
+	<!-- 스프링의 AOP네임스페이스를 사용하여 선언적인 트랜잭션을 설정한다 -->
+	<!-- 선언적인 트랜잭션 설정을 하면 코드 상에 명식적으로 커밋이나 롤백이 없다 -->
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<!-- 모든 메소드에 대해, 모든 예외발생에 대하여 롤백 수행  -->
+			<!-- propagation 디폴트는 REQUIRED -->
+			<!-- REQUIRED: Support a current transaction, create a new one if none exists. -->
+			<!-- Exception이 발생하면 롤백한다 -->
+			<tx:method name="*" rollback-for="Exception"/>
+		</tx:attributes>
+	</tx:advice>
+
+	<tx:advice id="txAdviceReqNew" transaction-manager="txManager">
+		<tx:attributes>
+			<!-- REQUIRES_NEW: Create a new transaction, and suspend the current transaction if one exists.  -->
+			<tx:method name="*" propagation="REQUIRES_NEW" timeout="10"/>
+		</tx:attributes>
+	</tx:advice>
+
+	<tx:advice id="txAdviceSupports" transaction-manager="txManager">
+		<tx:attributes>
+			<!-- SUPPORTS: Support a current transaction, execute non-transactionally if none exists.  -->
+			<tx:method name="*" rollback-for="Exception" propagation="SUPPORTS" timeout="10"/>
+		</tx:attributes>
+	</tx:advice>
+
+	<tx:advice id="txAdviceNotSupported" transaction-manager="txManager">
+		<tx:attributes>
+			<!-- Execute non-transactionally, suspend the current transaction if one exists.  -->
+			<tx:method name="*" propagation="NOT_SUPPORTED"/>
+		</tx:attributes>
+	</tx:advice>
+
+
+    <!-- execution - for matching method execution join points, this is the primary pointcut
+         designator you will use when working with Spring AOP
+    -->
+    <!-- execution(접근지정 리턴타입 패키지.클래스.메소드패턴(파라미터 패턴)) (예) execution(public * *(..)) 모든 퍼블릭 메소드 -->
+    <!-- 리턴타입, 메소드, 파라미터 패턴은 필수 -->
+    <!-- 파라미터 패턴의 경우 ()는 파라미터가 없는 패턴이고 (..)은 파라미터가 없거나 또는 하나 이상인 모든 경우를 의미 -->
+	<aop:config>
+		<aop:pointcut id="requiredTx" expression="execution(* com.foo.myapp..*.*ServiceImpl.save*(..))
+		                                       or execution(* com.foo.myapp..*.*ServiceImpl.update*(..))
+		                                       or execution(* com.foo.myapp..*.*ServiceImpl.delete*(..))" />
+
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="requiredTx" />
+	</aop:config>
+
+
+	<!-- Programatic Transaction Management -->
+	<!-- TransactionTemplate을 사용 -->
+	<bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+        <property name="transactionManager" ref="txManager" />
+    </bean>
+
+
+</beans>

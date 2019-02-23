@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+
+    <!-- MySQL -->
+    <!-- 커넥션풀 라이브러리로 apache DBCP를 사용 -->
+	<bean id="dataSource-mysql" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${Globals.DriverClassName}"/>
+		<property name="url" value="${Globals.Url}" />
+		<property name="username" value="${Globals.UserName}"/>
+		<property name="password" value="${Globals.Password}"/>
+	</bean>
+
+
+	<!-- SqlSession setup for MyBatis Database Layer -->
+	<!-- Spring-MyBatis 에서 SqlSession을 만들려면 SqlSessionFactoryBean을 설정한다. -->
+	<!-- SqlSession을 통해서 일련의 SQL문에 대해 commit,rollback,close를 할 수 있게 된다. -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource-mysql" />
+		<property name="configLocation" value="classpath:/framework/sqlmap/sql-mapper-config.xml" />
+		<property name="mapperLocations" value="classpath:/framework/sqlmap/**/mappers/*.xml" />
+	</bean>
+
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSession" />
+    </bean>
+
+
+</beans>

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Board">
+
+    <resultMap id="boardList" type="boardVO">
+		<result property="boardId"    column="BOARD_ID" />
+		<result property="cnttId"     column="CNTT_ID"/>
+		<result property="cnttTitle"  column="CNTT_TITLE" />
+		<result property="authorId"   column="AUTHOR_ID"/>
+		<result property="cnttHit"    column="CNTT_HIT"/>
+		<result property="updtTm"     column="UPDT_TM"/>
+	</resultMap>
+
+	<resultMap id="boardCntt" type="boardVO">
+		<result property="boardId"    column="BOARD_ID" />
+		<result property="cnttId"     column="CNTT_ID"/>
+		<result property="cnttTitle"  column="CNTT_TITLE" />
+		<result property="cnttPost"   column="CNTT_POST"/>
+		<result property="authorId"   column="AUTHOR_ID"/>
+		<result property="atchFileId" column="ATCH_FILE_ID"/>
+		<result property="updtTm"     column="UPDT_TM"/>
+	</resultMap>
+
+
+    <insert id="insertBoard" parameterType="boardVO">
+        <selectKey resultType="java.lang.Long" keyProperty="sortOrdr" order="BEFORE">
+			SELECT IFNULL(MAX(SORT_ORDR),0)+1 AS SORT_ORDR  FROM T_BOARD
+			WHERE BOARD_ID = #{boardId}
+		</selectKey>
+
+        INSERT INTO T_BOARD (
+             CNTT_ID
+			,BOARD_ID
+			,CNTT_TITLE
+			,CNTT_POST
+			,SORT_ORDR
+			,CNTT_HIT
+			,AUTHOR_ID
+			,PASSWD
+			,ATCH_FILE_ID
+			,INST_TM
+			,INST_ID
+			,UPDT_TM
+			,UPDT_ID
+        ) VALUES (
+             #{cnttId}
+            ,#{boardId}
+			,#{cnttTitle}
+			,#{cnttPost}
+			,#{sortOrdr}
+			,0
+			,#{authorId}
+			,#{cnttPasswd}
+			,#{atchFileId}
+			,SYSDATE()
+			,#{authorId}
+			,SYSDATE()
+			,#{authorId}
+        )
+    </insert>
+
+    <select id="selectBoardList" parameterType="searchBoardVO" resultMap="boardList">
+		<![CDATA[
+			SELECT
+				BOARD_ID,
+                CNTT_ID,
+                CNTT_TITLE,
+		        AUTHOR_ID,
+		        CNTT_HIT,
+				DATE_FORMAT(UPDT_TM, '%Y%m%d') AS UPDT_TM
+			FROM T_BOARD
+		   WHERE BOARD_ID = #{boardId}
+		]]>
+	    <choose>
+           <when test="searchType == 'TITLE'">
+               AND CNTT_TITLE LIKE CONCAT('%',#{searchKey},'%')
+           </when>
+           <when test="searchType == 'AUTHOR'">
+               AND AUTHOR_ID = #{searchKey}
+           </when>
+        </choose>
+		ORDER BY SORT_ORDR DESC
+		LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+	</select>
+
+	<select id="selectBoardListCount" parameterType="searchBoardVO" resultType="java.lang.Integer">
+	    <![CDATA[
+			SELECT
+				COUNT(*) AS TOTAL_CNT
+			FROM T_BOARD
+		   WHERE BOARD_ID = #{boardId}
+		]]>
+	    <choose>
+           <when test="searchType == 'TITLE'">
+               AND CNTT_TITLE LIKE CONCAT('%',#{searchKey},'%')
+           </when>
+           <when test="searchType == 'AUTHOR'">
+               AND AUTHOR_ID = #{searchKey}
+           </when>
+        </choose>
+	</select>
+
+	<select id="selectBoardCntt" parameterType="searchBoardVO" resultMap="boardCntt">
+		<![CDATA[
+			SELECT
+				BOARD_ID,
+                CNTT_ID,
+                CNTT_TITLE,
+		        CNTT_POST,
+		        AUTHOR_ID,
+		        ATCH_FILE_ID,
+				DATE_FORMAT(UPDT_TM, '%Y-%m-%d %r') AS UPDT_TM
+			FROM T_BOARD
+		   WHERE BOARD_ID = #{boardId}
+		     AND CNTT_ID = #{cnttId}
+		]]>
+	</select>
+
+	<update id="updateBoard" parameterType="boardVO">
+	    <![CDATA[
+	    UPDATE T_BOARD
+	       SET CNTT_TITLE = #{cnttTitle}
+		      ,CNTT_POST = #{cnttPost}
+		      ,ATCH_FILE_ID = #{atchFileId}
+		      ,UPDT_TM = NOW()
+		      ,UPDT_ID = #{authorId}
+	     WHERE BOARD_ID = #{boardId}
+	       AND CNTT_ID = #{cnttId}
+	    ]]>
+	</update>
+
+	<update id="updateHit" parameterType="boardVO">
+	    <![CDATA[
+	    UPDATE T_BOARD
+	       SET CNTT_HIT = CNTT_HIT + 1
+	     WHERE BOARD_ID = #{boardId}
+	       AND CNTT_ID = #{cnttId}
+	    ]]>
+	</update>
+
+	<delete id="deleteBoard" parameterType="boardVO">
+	    DELETE
+	      FROM T_BOARD
+	     WHERE BOARD_ID = #{boardId}
+	      AND CNTT_ID = #{cnttId}
+	</delete>
+
+
+
+</mapper>

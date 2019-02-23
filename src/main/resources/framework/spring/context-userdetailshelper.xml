@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!--
+	수정일          수성자                          수정내용
+   ===========     ========      =================================================
+   2011.10.11		이기하			context-common.xml 파일에서 별도분리
+
+ ************************************************************************************************
+	0. 세션/시큐리티를 제외한 테스트위한 인증(더미)을 사용하는 빈 : 사용
+
+	1. 세션을 이용한 인증을 사용하는 빈 : 주석
+
+	2. 스프링 시큐리티를 이용한 인증을 사용할 빈 : 주석
+	   - 권한관리 패키지 설치 : egovframework-authormanage-2.0.0.zip
+	   - web.xml 설정 : springSecurityFilterChain, EgovSpringSecurityLogoutFilter, EgovSpringSecurityLoginFilter
+ ************************************************************************************************
+-->
+	<!-- 인증, 권한 등의 정보를 확인 할 수있는 서비스 설정-->
+	<bean id="userDetailsHelper" class="com.foo.myapp.common.auth.UserDetailsHelper">
+        <property name="userDetailsService">
+            <ref bean="sessionUserDetailsService" />
+        </property>
+    </bean>
+
+    <!-- 0. 세션/시큐리티를 제외한 테스트위한 인증(더미)을 사용하는 빈 -->
+    <bean id="testUserDetailsService" class="com.foo.myapp.common.auth.service.TestUserDetailsServiceImpl"/>
+
+    <!-- 1. 세션을 이용한 인증을 사용하는 빈 -->
+    <bean id="sessionUserDetailsService" class="com.foo.myapp.common.auth.service.SessionUserDetailsServiceImpl"/>
+
+    <!-- 2. 스프링 시큐리티를 이용한 인증을 사용할 빈 -->
+    <!--
+    <bean id="securityUserDetailsService" class="com.foo.myapp.common.auth.sec.SecurityUserDetailsServiceImpl"/>
+	-->
+</beans>

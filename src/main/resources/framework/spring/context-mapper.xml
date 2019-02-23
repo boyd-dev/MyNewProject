@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- MyBatis mapper 인터페이스 방식을 사용할 때 설정 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	    <property name="basePackage" value="com.foo.myapp.user.mapper" />
+	    <!-- optional unless there are multiple session factories defined -->
+        <property name="sqlSessionFactoryBeanName" value="sqlSession" />
+    </bean>
+
+
+</beans>
