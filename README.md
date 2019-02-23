@@ -47,7 +47,7 @@ ImagePaginationRenderer를 구현예제로 추가했습니다.
 복잡한 소스를 최대한 줄이고 기본적인 흐름을 이해할 수 있도록 단순하게 구성한 예제이므로 
 스프링 MVC를 처음 접하는 분들에게 도움이 되었으면 하는 바람입니다.
 
-STS 4부터는 legacy Spring MVC가 지원되지 않습니다. 
+STS 4부터는 legacy Spring MVC 템플릿이 지원되지 않습니다. 
 이 예제는 STS 3.8.4과 오라클 JDK 1.8.0_162에서 만들어졌습니다. Servlet 버전은 2.5입니다.
 
 <b>사용법</b>
