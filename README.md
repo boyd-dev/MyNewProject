@@ -30,11 +30,9 @@ globals.properties에서 데이터베이스 연결정보를 설정합니다.
 MyBatis를 사용하고 mapper인터페이스 구현 예제를 일부 포함시켰습니다.
 
 2) 페이징은 전자정부프레임워크의 페이징 인터페이스와 클래스를 이용합니다.<a href="http://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:ptl:view:paginationtag&s[]=pagination">[관련 도움말]</a>
-
 ImagePaginationRenderer를 구현예제로 추가했습니다.
 
 3) 유일키는 전자정부프레임워크의 유일키 생성 부분을 이용합니다. <a href="http://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:fdl:id_generation&s[]=id&s[]=generation">[관련 도움말]</a>
-
 채번 테이블(T_SEQ_MASTER)을 사용하고 10개씩 캐싱합니다.
 
 4) 세션 기반의 인증으로 인터셉터를 사용합니다.
