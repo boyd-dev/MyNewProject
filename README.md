@@ -21,7 +21,7 @@
 DB에서 페이징을 하지 않고 그리드의 클라이언트-사이드 페이징 기능을 이용합니다. 
 그리드 라이브러리는 ag-Grid를 사용합니다.
 
-*기타사항
+**기타사항
 
 0) 페이지 디자인은 무시합니다.
 
@@ -60,7 +60,8 @@ http://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte2:ptl:validation
 STS 4부터는 legacy Spring MVC가 지원되지 않습니다. 
 이 예제는 STS 3.8.4과 오라클 JDK 1.8.0_162에서 만들어졌습니다. Servlet 버전은 2.5입니다.
 
-*사용법
+**사용법
+
 Sign-up 화면에서 사용자등록 후 로그인해서 게시판에 글을 씁니다.
 
 
