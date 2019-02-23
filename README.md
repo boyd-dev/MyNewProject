@@ -32,7 +32,7 @@ MyBatis를 사용하고 mapper인터페이스 구현 예제를 일부 포함시�
 
 2) 페이징은 전자정부프레임워크의 페이징 인터페이스와 클래스를 이용합니다.
 
-http://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:ptl:view:paginationtag&s[]=pagination
+<a href="http://www.egovframe.go.kr/wiki/doku.php?id=egovframework:rte:ptl:view:paginationtag&s[]=pagination">도움말</a>
 
 ImagePaginationRenderer를 구현예제로 추가했습니다.
 
