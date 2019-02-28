@@ -4,9 +4,11 @@
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 
@@ -41,7 +43,13 @@
 	    p:prefix="/WEB-INF/views/"
 	    p:suffix=".jsp"/>
 
-	<context:component-scan base-package="com.foo.myapp" />
+    <!-- context-common.xml에서 설정한 컴포넌트 스캔과 중복되지 않도록 한다. -->
+	<context:component-scan base-package="com.foo.myapp">
+ 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+ 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
+	</context:component-scan>
+
 
     <!-- session 정보를 검사 -->
 	<interceptors>
@@ -59,6 +67,5 @@
     </beans:bean>
 
     <beans:alias alias="multipartResolver" name="spring.RegularCommonsMultipartResolver"/>
-
 
 </beans:beans>

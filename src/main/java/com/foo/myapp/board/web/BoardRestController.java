@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.foo.myapp.board.service.IBoardService;
@@ -28,7 +27,7 @@ public class BoardRestController {
 
 
 	@RequestMapping(value="/board/{boardId}")
-	@ResponseBody
+	//@ResponseBody
 	public String boardList(@PathVariable String boardId) throws Exception {
 
 		LOGGER.debug("Board ID = " + boardId);

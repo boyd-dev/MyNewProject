@@ -70,5 +70,4 @@
         <property name="transactionManager" ref="txManager" />
     </bean>
 
-
 </beans>
