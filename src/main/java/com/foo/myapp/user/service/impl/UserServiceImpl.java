@@ -28,7 +28,6 @@ public class UserServiceImpl implements IUserService {
 		result = userMapper.insertUser(vo);
 
 		return result;
-
 	}
 
 	@Override

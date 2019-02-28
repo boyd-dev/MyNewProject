@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+
+   <!-- MyBatis 트랜잭션 관리자는 context-transaction.xml에 DataSourceTransactionManager으로 설정 -->
+   <!-- 여기서는 JPA용으로 트랜잭션 관리자를 하나 더 만들기로 한다. -->
+   <bean id="jpaTxManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+      <property name="entityManagerFactory" ref="entityManagerFactory"/>
+   </bean>
+
+
+   <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+      <property name="persistenceUnitName" value="MySQLJPA"/>
+      <!-- <property name="persistenceXmlLocation" value="classpath:META-INF/persistence_custom_location.xml"/> -->
+      <property name="dataSource"       ref="dataSource-mysql"/>
+      <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
+      <!-- 설정을 이렇게 할 수도 있어서 사실상 persistence.xml은 필요없다?
+      <property name="jpaProperties">
+          <props>
+             <prop key="hibernate.hbm2ddl.auto">create-drop</prop>
+             <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
+          </props>
+       </property>
+       <property name="packagesToScan" value="com.foo.myapp.user.persistence" />
+       -->
+   </bean>
+
+   <!-- persistence.xml 설정과 일정부분 중복되므로 여기서 설정한다. -->
+   <bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+       <property name="showSql"          value="true"/>
+       <property name="databasePlatform" value="org.hibernate.dialect.MySQL5Dialect"/> <!-- MySQL 5.x -->
+   </bean>
+
+   <!-- JPA Annotation -->
+   <bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor"/>
+
+   <!-- @Transactional 스캔 -->
+   <tx:annotation-driven transaction-manager="jpaTxManager"/>
+
+</beans>

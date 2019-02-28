@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+
+
+    <!-- 하나의 데이터소스에 하나의 persistence-unit이 설정한다 -->
+    <!-- If developers select the RESOURCE_LOCAL, then the transaction will be managed by the JPA Provider Implementation in use. -->
+    <!-- If JTA is specified, then the transactions will be managed by the Application Server. -->
+	<persistence-unit name="MySQLJPA" transaction-type="RESOURCE_LOCAL">
+
+        <class>com.foo.myapp.user.persistence.User</class><!-- entity class -->
+        <exclude-unlisted-classes>true</exclude-unlisted-classes> <!-- 여기에 없는 entity 클래스를 ORM하지 않는다(스캔하지 않는다). -->
+        <!-- entity 클래스를 만들지 않고 ORM 파일을 지정
+        <mapping-file>framework/jpa/User-orm.xml</mapping-file>
+        -->
+		<properties>
+            <property name="hibernate.format_sql"   value="true"/>
+            <!-- DB스키마와 entity 클래스의 타입 일치 확인 -->
+            <!-- <property name="hibernate.hbm2ddl.auto" value="validate" /> -->
+
+            <!-- Hibernate usually provides a built-in connection pooling mechanism which is good enough for development and testing,
+                 but is not suitable for production environment. -->
+            <property name="hibernate.c3p0.min_size" value="5" />
+            <property name="hibernate.c3p0.max_size" value="10" />
+            <property name="hibernate.c3p0.timeout"  value="300" /><!-- in second -->
+        </properties>
+
+	</persistence-unit>
+
+</persistence>

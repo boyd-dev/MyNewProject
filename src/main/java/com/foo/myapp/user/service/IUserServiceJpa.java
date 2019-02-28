@@ -1,7 +1,8 @@
 package com.foo.myapp.user.service;
 
+import com.foo.myapp.user.persistence.User;
 
-public interface IUserService {
+public interface IUserServiceJpa {
 
 
 	/**
@@ -20,8 +21,7 @@ public interface IUserService {
 	 * @return
 	 * @throws Exception
 	 */
-	public int selectCountByMberId(UserVO vo) throws Exception;
-
+	public long selectCountByMberId(User vo) throws Exception;
 
 
 }
