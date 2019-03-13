@@ -64,7 +64,7 @@
 		        document.signupForm.passwd.focus();
 		    } else {
 
-		    	if (fn_pwdValidation(pw)) {
+		    	if (gfn_pwdValidation(pw)) {
 
 		    		if (cpw === "" || (cpw !== pw)) {
 		    	        alert("비밀번호를 확인하십시오.");
@@ -117,7 +117,6 @@
 		$('#id').on("change", function(){
 			fn_checkDuplication();
 		});
-
 
 	});
 

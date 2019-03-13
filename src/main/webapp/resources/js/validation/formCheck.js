@@ -8,7 +8,7 @@
 //첫 번째 form에 대하여 적용함
 //input text에 required 라는 속성을 부여해야 함
 //CKEDITOR를 사용하고 그 내용을 cnttPost라는 이름으로 전달하는 경우에만 사용
-function fn_checkRequired(){
+function gfn_checkRequired(){
 
 	var elements = document.forms[0].elements;
 	for (k=0; k<elements.length; k++){
@@ -31,7 +31,7 @@ function fn_checkRequired(){
 
 //패스워드 유효성 검사
 //영문자,숫자로 구성되는 4자리-8자리 글자, 시작은 영문자
-function fn_pwdValidation(str) {
+function gfn_pwdValidation(str) {
 
 	const regExpr = /^[A-Za-z]\w{3,7}$/;
 
@@ -41,4 +41,32 @@ function fn_pwdValidation(str) {
 		return false;
 	}
 }
+
+
+//Spring Security CSRF방지를 위한 토큰 포함 전송
+//화면마다 폼 필드를 추가하지 않고 공통의 submit 함수에서 token 필드를 추가
+//파라미터가 2개가 아니면 일반적인 submit으로 처리
+function gfn_csrf_submit(...args) {
+
+	const form = document.forms[0];
+
+	if (args.length == 2) {
+		const _csrf  = args[0];
+		const _token = args[1];
+
+		if (_csrf != null && _csrf != '' && _token != null  && _token != '') {
+			console.log(_token);
+			const hiddenField = document.createElement("INPUT");
+			hiddenField.setAttribute("type", "hidden");
+			hiddenField.setAttribute("name", _csrf);
+			hiddenField.setAttribute("value", _token);
+
+			form.appendChild(hiddenField);
+		}
+	}
+    form.submit();
+}
+
+
+
 

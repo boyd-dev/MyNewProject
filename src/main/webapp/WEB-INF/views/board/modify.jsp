@@ -13,6 +13,8 @@
 <link rel="icon" type="image/x-icon" href="<c:url value='/resources/favicon.ico'/>"/>
 <link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/style.css'/>" />
 <script src="<c:url value='/resources/ckeditor/ckeditor.js'/>"></script>
+<script src="<c:url value='/resources/js/validation/formCheck.js'/>"></script>
+
 <title>Write</title>
 </head>
 <body onload="fnShowMessage()">
@@ -59,9 +61,10 @@ ID: <b><c:out value="${result.cnttId}"/></b>
 
 
 <script type="text/javascript">
+
 	function fn_list(){
 		document.frm.action = "<c:url value='/board/boardList.do'/>";
-		document.frm.submit();
+		gfn_csrf_submit('${_csrf.parameterName}', '${_csrf.token}');
 	}
 
 	function fn_save() {
@@ -69,12 +72,17 @@ ID: <b><c:out value="${result.cnttId}"/></b>
 		console.log(data);
 		document.frm.cnttPost.value = data;
 		document.frm.action = "<c:url value='/board/boardUpdate.do'/>";
-		document.frm.submit();
+	    gfn_csrf_submit('${_csrf.parameterName}', '${_csrf.token}');
 	}
 
 	function fn_delete() {
 		document.frm.action = "<c:url value='/board/boardDelete.do'/>";
-		document.frm.submit();
+		gfn_csrf_submit('${_csrf.parameterName}', '${_csrf.token}');
+	}
+
+	function fn_reset() {
+		document.frm.action = "<c:url value='/board/boardCntt.do'/>";
+		gfn_csrf_submit('${_csrf.parameterName}', '${_csrf.token}');
 	}
 
 	var fnShowMessage = function() {

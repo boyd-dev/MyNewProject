@@ -27,6 +27,9 @@ public class UserServiceImpl implements IUserService {
 
 		result = userMapper.insertUser(vo);
 
+		//ROLE_USER 등록
+		result = userMapper.insertRoleUserMapping(vo);
+
 		return result;
 	}
 

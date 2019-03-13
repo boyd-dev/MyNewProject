@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.foo.myapp.board.service.BoardVO;
 import com.foo.myapp.board.service.IBoardService;
 import com.foo.myapp.board.service.SearchBoardVO;
+import com.foo.myapp.common.auth.UserDetailsHelper;
 import com.foo.myapp.login.service.LoginVO;
 
 @Controller
@@ -73,7 +74,8 @@ public class BoardGridController {
 	@RequestMapping("/board/boardSaveGrid.do")
 	public String boardSave(@ModelAttribute("postVO") @Valid BoardVO boardVO, BindingResult bindingResult, Model model, HttpSession session) throws Exception {
 
-		LoginVO loginVO = (LoginVO)session.getAttribute("userInfo");
+		LoginVO loginVO = (LoginVO) UserDetailsHelper.getAuthenticatedUser();
+
 		if (loginVO != null) {
 			boardVO.setAuthorId(loginVO.getMberId());
 		}
@@ -137,7 +139,8 @@ public class BoardGridController {
 		    return "forward:/board/readGrid";
 		}
 
-		int result = service.updateBoardContent(boardVO, (LoginVO)session.getAttribute("userInfo"));
+		LoginVO loginVO = (LoginVO) UserDetailsHelper.getAuthenticatedUser();
+		int result = service.updateBoardContent(boardVO, loginVO);
 
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("UPDATE=" + result);
@@ -149,7 +152,8 @@ public class BoardGridController {
 	@RequestMapping("/board/boardDeleteGrid.do")
 	public String boardDelete(@ModelAttribute("postVO") BoardVO boardVO, Model model, HttpSession session) throws Exception {
 
-		int result = service.deleteBoard(boardVO, (LoginVO)session.getAttribute("userInfo"));
+		LoginVO loginVO = (LoginVO) UserDetailsHelper.getAuthenticatedUser();
+		int result = service.deleteBoard(boardVO, loginVO);
 
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("DELETE=" + result);

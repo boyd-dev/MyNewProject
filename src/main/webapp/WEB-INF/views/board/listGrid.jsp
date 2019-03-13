@@ -19,7 +19,7 @@
 <script src="https://unpkg.com/ag-grid-community/dist/ag-grid-community.min.noStyle.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-grid.css">
 <link rel="stylesheet" href="https://unpkg.com/ag-grid-community/dist/styles/ag-theme-balham.css">
-
+<script src="<c:url value='/resources/js/validation/formCheck.js'/>"></script>
 
 <title>List(ag-Grid)</title>
 </head>
@@ -103,24 +103,23 @@
 
 		//초기화
 		$('#btnSearch').click(function(){
-			//$('#searchText').val('');
-			//$('#searchText').trigger('input');
-			fn_test();
+			$('#searchText').val('');
+			$('#searchText').trigger('input');
 	    });
 
 		$("#btnPost").on("click", function(){
 			document.frm.action = "<c:url value='/board/addPostingGrid.do'/>";
-			document.frm.submit();
+			gfn_csrf_submit('${_csrf.parameterName}', '${_csrf.token}');
 		});
 
 		$("#btnSignOut").on("click", function(){
-			document.frm.action = "<c:url value='/actionLogout.do'/>";
-			document.frm.submit();
+			document.frm.action = "<c:url value='/logout'/>";
+			gfn_csrf_submit('${_csrf.parameterName}', '${_csrf.token}');
 		});
 
 		$("#btnMain").on("click", function(){
 			document.frm.action = "<c:url value='/main.do'/>";
-			document.frm.submit();
+			gfn_csrf_submit('${_csrf.parameterName}', '${_csrf.token}');
 		});
 	});
 
@@ -149,20 +148,13 @@
 	var fn_getPost = function (v) {
 		document.frm.cnttId.value = v;
 		document.frm.action = "<c:url value='/board/boardCnttGrid.do'/>";
-		document.frm.submit();
-	}
-
-
-	function fn_boardCntt(v){
-		document.frm.cnttId.value = v;
-		document.frm.action = "<c:url value='/board/boardCntt.do'/>";
-		document.frm.submit();
+		gfn_csrf_submit('${_csrf.parameterName}', '${_csrf.token}');
 	}
 
 
 	var fn_getList = function () {
 
-		var url = "<c:url value='/board/boardGrid.do'/>";
+		var url = "<c:url value='/board/boardGrid.do?_csrf=${_csrf.token}'/>";
 	    var boardId = $("#boardId").val();
 	    //한 번에 전부 가져와서 클라이언트 측에서 그리드 페이징한다.
 	    //TODO 건수가 많아지면 ag-Grid의 server-side row model을 고려한다.

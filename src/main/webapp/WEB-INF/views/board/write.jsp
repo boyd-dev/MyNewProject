@@ -13,6 +13,8 @@
 <link rel="icon" type="image/x-icon" href="<c:url value='/resources/favicon.ico'/>"/>
 <link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/style.css'/>" />
 <script src="<c:url value='/resources/ckeditor/ckeditor.js'/>"></script>
+<script src="<c:url value='/resources/js/validation/formCheck.js'/>"></script>
+
 <title>Write</title>
 </head>
 <body>
@@ -53,7 +55,7 @@
 
 	function fn_list(){
 		document.frm.action = "<c:url value='/board/boardList.do'/>";
-		document.frm.submit();
+		gfn_csrf_submit('${_csrf.parameterName}', '${_csrf.token}');
 	}
 
 	function fn_save() {
@@ -61,8 +63,9 @@
 		console.log(data);
 		document.frm.cnttPost.value = data;
 		document.frm.action = "<c:url value='/board/boardSave.do'/>";
-		document.frm.submit();
+		gfn_csrf_submit('${_csrf.parameterName}', '${_csrf.token}');
 	}
+
 
 </script>
 

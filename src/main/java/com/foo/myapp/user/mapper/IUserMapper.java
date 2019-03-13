@@ -20,6 +20,12 @@ public interface IUserMapper {
 	public int insertUser(UserVO vo) throws Exception;
 
 
+	//Spring Security 권한 정보가 필요하다.
+	@Insert("INSERT INTO T_ROLE_USER_MAPPING(MBER_ID, ROLE_CODE, INST_TM, UPDT_TM) "
+			+ "VALUES (#{mberId}, 'ROLE_USER', NOW(), NOW())")
+	public int insertRoleUserMapping(UserVO vo) throws Exception;
+
+
 	@Select("SELECT COUNT(*) FROM T_MEMBER WHERE MBER_ID = #{mberId}")
 	public int selectCountByMberId(UserVO vo) throws Exception;
 

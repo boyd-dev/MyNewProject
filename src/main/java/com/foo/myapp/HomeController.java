@@ -11,6 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.foo.myapp.common.auth.UserDetailsHelper;
+import com.foo.myapp.login.service.LoginVO;
+
 
 /**
  * Handles requests for the application home page.
@@ -40,6 +43,12 @@ public class HomeController {
 
 	@RequestMapping(value="/main.do")
     public String mainPage() {
+
+		LoginVO loginVO = (LoginVO) UserDetailsHelper.getAuthenticatedUser();
+		logger.debug("USER NAME=" + loginVO.getMberNm());
+		UserDetailsHelper.getAuthorities().forEach(auth -> logger.debug(auth));
+
+
 		return "main";
     }
 

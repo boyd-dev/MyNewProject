@@ -18,7 +18,7 @@ import com.foo.myapp.common.auth.IUserDetailsService;
 public class SessionUserDetailsServiceImpl implements IUserDetailsService {
 
 	/**
-	 * RequestContextHolder is a spring API for setting the values
+	 * RequestContextHolder is a Spring API for setting the values
 	 * to any of three scopes request, session or global session.
 	 * Note that in some situations, we may not be able to get the actual request
 	 * from the request, we can simply use RequestContextHolder to get the request
@@ -48,8 +48,8 @@ public class SessionUserDetailsServiceImpl implements IUserDetailsService {
 	}
 
 	public Boolean isAuthenticated() {
-		// 인증된 유저인지 확인한다.
 
+		// 인증된 유저인지 확인한다.
 		if (RequestContextHolder.getRequestAttributes() == null) {
 			return false;
 		} else {

@@ -68,7 +68,7 @@
     const pond = FilePond.create(f, { maxFiles: 3,
     	                              allowMultiple: true,
     	                              server: { url: "<c:url value='/board'/>",
-    	                            	        process: {url: "/boardSaveFile.do" },
+    	                            	        process: {url: "/boardSaveFile.do?_csrf=" + "${_csrf.token}" },
     	                            	        revert: function (fileId, load, error) { fn_revertFile(fileId); load(); }
     	                              }
     	                              //instantUpload: false
@@ -117,7 +117,7 @@
 		//고전적인 AJAX
 		if (window.XMLHttpRequest) {
 		    x = new XMLHttpRequest();
-			x.open("POST", "<c:url value='/board/boardDeleteFile.do'/>", true); //async
+			x.open("POST", "<c:url value='/board/boardDeleteFile.do?_csrf='/>" + "${_csrf.token}", true); //async
 			x.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 			x.onreadystatechange = handleStateChange;
 			x.send("fileId=" + fileId); //POST방식일때 send()를 사용하여 querystring형태로 전달한다.
@@ -130,7 +130,7 @@
 
 	function fn_list(){
 		document.frm.action = "<c:url value='/board/boardListFile.do'/>";
-		document.frm.submit();
+		gfn_csrf_submit('${_csrf.parameterName}', '${_csrf.token}');
 	}
 
 	function fn_save() {
@@ -143,8 +143,8 @@
 		document.frm.cnttPost.value = data;
 		document.frm.action = "<c:url value='/board/boardSaveAttchFile.do'/>";
 
-		if (fn_checkRequired()) {
-			document.frm.submit();
+		if (gfn_checkRequired()) {
+			gfn_csrf_submit('${_csrf.parameterName}', '${_csrf.token}');
 		}
 
 	}

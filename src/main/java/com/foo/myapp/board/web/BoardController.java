@@ -28,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.foo.myapp.board.service.BoardVO;
 import com.foo.myapp.board.service.IBoardService;
 import com.foo.myapp.board.service.SearchBoardVO;
+import com.foo.myapp.common.auth.UserDetailsHelper;
 import com.foo.myapp.idgnr.service.IdGnrService;
 import com.foo.myapp.login.service.LoginVO;
 import com.foo.myapp.tag.Paging;
@@ -143,7 +144,9 @@ public class BoardController {
 	@RequestMapping("/board/boardSave.do")
 	public String boardSave(@ModelAttribute("postVO") @Valid BoardVO boardVO, BindingResult bindingResult, Model model, HttpSession session) throws Exception {
 
-		LoginVO loginVO = (LoginVO)session.getAttribute("userInfo");
+		//UserDetailsHelper를 사용하여 Spring Security 인증 정보를 가져온다.
+		LoginVO loginVO = (LoginVO) UserDetailsHelper.getAuthenticatedUser();
+
 		if (loginVO != null) {
 			boardVO.setAuthorId(loginVO.getMberId());
 		}
@@ -185,7 +188,9 @@ public class BoardController {
 		    return "/board/modify";
 		}
 
-		int result = service.updateBoardContent(boardVO, (LoginVO)session.getAttribute("userInfo"));
+		LoginVO loginVO = (LoginVO) UserDetailsHelper.getAuthenticatedUser();
+
+		int result = service.updateBoardContent(boardVO, loginVO);
 
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("UPDATE=" + result);
@@ -203,7 +208,9 @@ public class BoardController {
 	@RequestMapping("/board/boardDelete.do")
 	public String boardDelete(@ModelAttribute("postVO") BoardVO boardVO, Model model, HttpSession session) throws Exception {
 
-		int result = service.deleteBoard(boardVO, (LoginVO)session.getAttribute("userInfo"));
+		LoginVO loginVO = (LoginVO) UserDetailsHelper.getAuthenticatedUser();
+
+		int result = service.deleteBoard(boardVO, loginVO);
 
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("DELETE=" + result);

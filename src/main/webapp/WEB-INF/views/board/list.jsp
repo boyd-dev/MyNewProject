@@ -13,6 +13,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="icon" type="image/x-icon" href="<c:url value='/resources/favicon.ico'/>"/>
 <link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/style.css'/>" />
+<script src="<c:url value='/resources/js/validation/formCheck.js'/>"></script>
+
 <title>List</title>
 </head>
 <body>
@@ -91,42 +93,42 @@
 	</div>
 	<span><input type="button" value="Sign-out" title="Sign-out" onclick="javascript:fn_signOut();return false;"/></span>
 	<span><input type="button" value="Main" title="Main" onclick="javascript:fn_main();return false;"/></span>
-
 </form>
 </div>
 
 
 <script type="text/javascript">
+
 	function fn_list(){
 		document.frm.action = "<c:url value='/board/boardList.do'/>";
-		document.frm.submit();
+		gfn_csrf_submit('${_csrf.parameterName}', '${_csrf.token}');
 	}
 
 	function fn_posting(){
 		document.frm.action = "<c:url value='/board/addPosting.do'/>";
-		document.frm.submit();
+		gfn_csrf_submit('${_csrf.parameterName}', '${_csrf.token}');
 	}
 
 	function fn_page(pageNo){
 		document.frm.pageNo.value = pageNo;
 		document.frm.action = "<c:url value='/board/boardList.do'/>";
-		document.frm.submit();
+		gfn_csrf_submit('${_csrf.parameterName}', '${_csrf.token}');
 	}
 
 	function fn_boardCntt(v){
 		document.frm.cnttId.value = v;
 		document.frm.action = "<c:url value='/board/boardCntt.do'/>";
-		document.frm.submit();
+		gfn_csrf_submit('${_csrf.parameterName}', '${_csrf.token}');
 	}
 
 	function fn_signOut() {
-		document.frm.action = "<c:url value='/actionLogout.do'/>";
-		document.frm.submit();
+		document.frm.action = "<c:url value='/logout'/>";
+		gfn_csrf_submit('${_csrf.parameterName}', '${_csrf.token}');
 	}
 
 	function fn_main() {
 		document.frm.action = "<c:url value='/main.do'/>";
-		document.frm.submit();
+		gfn_csrf_submit('${_csrf.parameterName}', '${_csrf.token}');
 	}
 
 </script>

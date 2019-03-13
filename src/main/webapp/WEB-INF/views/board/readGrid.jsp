@@ -13,6 +13,8 @@
 <link rel="icon" type="image/x-icon" href="<c:url value='/resources/favicon.ico'/>"/>
 <link type="text/css" rel="stylesheet" href="<c:url value='/resources/css/style.css'/>" />
 <script src="<c:url value='/resources/ckeditor/ckeditor.js'/>"></script>
+<script src="<c:url value='/resources/js/validation/formCheck.js'/>"></script>
+
 <title>Write</title>
 </head>
 <body>
@@ -23,6 +25,7 @@ ID: <b><c:out value="${result.cnttId}"/></b>
 <br/>
 <c:out value="${result.updtTm}"/>, <c:out value="${result.authorId}"/> wrote...
 </p>
+
 <form name="frm" method="post">
     <input type="text" name="cnttTitle" class="input_title" readonly="readonly" value="<c:out value="${result.cnttTitle}"/>" />
 
@@ -52,12 +55,12 @@ ID: <b><c:out value="${result.cnttId}"/></b>
 
 	function fn_list(){
 		document.frm.action = "<c:url value='/board/boardListGrid.do'/>";
-		document.frm.submit();
+		gfn_csrf_submit('${_csrf.parameterName}', '${_csrf.token}');
 	}
 
 	function fn_modify() {
 		document.frm.action = "<c:url value='/board/boardModGrid.do'/>";
-		document.frm.submit();
+		gfn_csrf_submit('${_csrf.parameterName}', '${_csrf.token}');
 	}
 
 	</script>

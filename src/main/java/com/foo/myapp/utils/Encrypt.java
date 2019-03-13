@@ -6,7 +6,6 @@ import org.apache.commons.codec.binary.Base64;
 
 public class Encrypt {
 
-
     /**
      * 비밀번호를 암호화하는 기능(복호화가 되면 안되므로 SHA-256 인코딩 방식 적용)
      *
@@ -32,6 +31,7 @@ public class Encrypt {
 
 		return new String(Base64.encodeBase64(hashValue));
     }
+
 
     /**
      * 비밀번호를 암호화하는 기능(복호화가 되면 안되므로 SHA-256 인코딩 방식 적용)

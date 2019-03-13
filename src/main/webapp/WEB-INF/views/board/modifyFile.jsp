@@ -94,7 +94,7 @@ ID: <b><c:out value="${result.cnttId}"/></b>
 	const pond = FilePond.create(f, { maxFiles: 3,
 		                              allowMultiple: true,
 		                              server: { url: "<c:url value='/board'/>",
-		                            	        process: {url: "/boardSaveFile.do" },
+		                            	        process: {url: "/boardSaveFile.do?_csrf=" + "${_csrf.token}" },
 		                            	        revert: function (fileId, load, error) { fn_revertFile(fileId); load(); },
 		                            	        restore: {url: "/fileList.do?fileId=" }
 		                              },
@@ -137,7 +137,7 @@ ID: <b><c:out value="${result.cnttId}"/></b>
 		//파일 삭제 요청을 전송한다.
 		if (window.XMLHttpRequest) {
 		    x = new XMLHttpRequest();
-			x.open("POST", "<c:url value='/board/boardDeleteFile.do'/>", true); //async
+			x.open("POST", "<c:url value='/board/boardDeleteFile.do?_csrf='/>" + "${_csrf.token}", true); //async
 			x.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 			x.onreadystatechange = handleStateChange;
 			x.send("fileId=" + fileId); //POST방식일때 send()를 사용하여 querystring형태로 전달한다.
@@ -150,7 +150,7 @@ ID: <b><c:out value="${result.cnttId}"/></b>
 
 	function fn_list(){
 		document.frm.action = "<c:url value='/board/boardListFile.do'/>";
-		document.frm.submit();
+		gfn_csrf_submit('${_csrf.parameterName}', '${_csrf.token}');
 	}
 
 	function fn_save() {
@@ -164,14 +164,19 @@ ID: <b><c:out value="${result.cnttId}"/></b>
 		document.frm.cnttPost.value = data;
 		document.frm.action = "<c:url value='/board/boardUpdateFile.do'/>";
 
-		if (fn_checkRequired()) {
-			document.frm.submit();
+		if (gfn_checkRequired()) {
+			gfn_csrf_submit('${_csrf.parameterName}', '${_csrf.token}');
 		}
 	}
 
 	function fn_delete() {
 		document.frm.action = "<c:url value='/board/boardDeleteWithFiles.do'/>";
-		document.frm.submit();
+		gfn_csrf_submit('${_csrf.parameterName}', '${_csrf.token}');
+	}
+
+	function fn_reset() {
+		document.frm.action = "<c:url value='/board/boardCnttFile.do'/>";
+		gfn_csrf_submit('${_csrf.parameterName}', '${_csrf.token}');
 	}
 
 	var fnShowMessage = function() {

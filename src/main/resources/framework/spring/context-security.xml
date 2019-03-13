@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+
+    <!-- http pattern을 이렇게 별도로 설정하면 해당 패턴에 대해 security filter chain을 거치치 않는다(bypass)  -->
+ 	<security:http pattern="/resources/**" security="none"/>
+ 	<security:http pattern="/signup.do"  security="none"/> <!-- signup -->
+ 	<security:http pattern="/error.jsp"  security="none"/>
+ 	<security:http pattern="/" security="none"/> <!-- home -->
+
+    <!-- Enables Spring Security -->
+    <!-- web.xml에 설정된 DelegatingFilterProxy필터가 Spring Security의 필터를 차례로 통과하도록 한다 -->
+    <security:http auto-config="true" use-expressions="true">
+
+         <!-- Patterns are always evaluated in the order they are defined.
+              Thus it is important that more specific patterns are defined higher in the list than less specific patterns. -->
+         <security:intercept-url pattern="/subscrb/**" method="GET" access="permitAll" /><!-- REST API -->
+         <security:intercept-url pattern="/**" access="hasRole('USER')" />
+
+         <security:form-login default-target-url="/main.do" always-use-default-target="true" /><!-- 로그인 성공 후 항상 메인으로 이동 -->
+         <!-- <security:csrf disabled="true" /> --> <!-- disable CSRF filter -->
+		 <security:logout logout-success-url="/" invalidate-session="true" />
+		 <security:access-denied-handler error-page="/error403.jsp"/>
+    </security:http>
+
+    <!-- in-memory authentication for simple test -->
+    <!--
+    <security:authentication-manager alias="authenticationManager">
+	    <security:authentication-provider>
+	        <security:user-service>
+	            <security:user name="scott" password="tiger" authorities="ROLE_USER, ROLE_ADMIN" />
+	        </security:user-service>
+	    </security:authentication-provider>
+    </security:authentication-manager>
+    -->
+
+    <!-- JDBC 인증 -->
+    <security:authentication-manager alias="authenticationManager">
+	    <security:authentication-provider user-service-ref="jdbcUserService">
+		    <!--
+		    <security:password-encoder hash="sha-256" base64="true">
+		        <security:salt-source user-property="username" />
+		    </security:password-encoder>
+		    -->
+		    <security:password-encoder ref="customPasswordEncoder">
+		        <security:salt-source user-property="username" />
+		    </security:password-encoder>
+	    </security:authentication-provider>
+    </security:authentication-manager>
+
+    <bean id="customPasswordEncoder" class="com.foo.myapp.common.security.CustomPasswordEncoder"/>
+
+    <!-- 사용자 정보관리 구현체인 JdbcUserDetailsManager를 상속하여  CustomJdbcUserDetailsManager로 인증 처리 -->
+    <!-- JdbcUserDetailsManager는  JdbcDaoImpl을 상속받기 때문에 마찬가지로 UserDetailsService 구현체이기도 하다 -->
+    <bean id="jdbcUserService" class="com.foo.myapp.common.security.userdetails.CustomJdbcUserDetailsManager" >
+        <property name="usersByUsernameQuery">
+	        <value><!-- 컬럼명은 상관없지만 처음 3개는 username, password, enabled로 맞춘다 -->
+	            SELECT MBER_ID,PASSWORD,TRUE,MBER_NM,MBER_EMAIL FROM T_MEMBER WHERE MBER_ID = ?
+	        </value>
+	    </property>
+	    <property name="authoritiesByUsernameQuery">
+	        <value><!-- 컬럼명은 상관없지만 처음 2개는 username, role로 맞춘다 -->
+	            SELECT A.MBER_ID, A.ROLE_CODE FROM T_ROLE_USER_MAPPING A, T_MEMBER B WHERE A.MBER_ID = B.MBER_ID AND B.MBER_ID = ?
+	        </value>
+	    </property>
+	    <property name="roleHierarchy" ref="roleHierarchy"/><!-- 권한의 상하관계도 함께 인증 정보로 생성한다. -->
+	    <property name="dataSource" ref="dataSource-mysql"/>
+    </bean>
+
+    <!-- 권한의 상하관계를 DB에서 조회 -->
+    <bean id="roleHierarchy" class="org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl">
+        <property name="hierarchy" ref="hierarchyStrings" />
+        <!--
+        <property name="hierarchy">
+        <value>
+            ROLE_ADMIN > ROLE_VIP
+            ROLE_VIP > ROLE_USER
+        </value>
+        </property>
+        -->
+    </bean>
+
+    <bean id="hierarchyStrings" class="com.foo.myapp.common.security.service.HierarchyStringsFactoryBean" init-method="init">
+        <property name="securedObjectService" ref="securedObjectService"/>
+    </bean>
+
+    <bean id="securedObjectService" class="com.foo.myapp.common.security.service.impl.SecuredObjectServiceImpl">
+        <property name="securedObjectDAO" ref="securedObjectDAO"/>
+    </bean>
+
+    <bean id="securedObjectDAO" class="com.foo.myapp.common.security.service.impl.SecuredObjectDaoImpl">
+        <property name="dataSource" ref="dataSource-mysql"/>
+        <!--
+        <property name="sqlHierarchicalRoles">
+		    <value>
+			    SELECT A.CHLDRN_ROLE AS CHILD, A.PARNTS_ROLE AS PARENT FROM T_ROLE_HIERARCHY A LEFT JOIN T_ROLE_HIERARCHY B ON (A.CHLDRN_ROLE = B.PARNTS_ROLE)
+		    </value>
+        </property>
+        -->
+    </bean>
+
+</beans>

@@ -52,6 +52,7 @@
 
 
     <!-- session 정보를 검사 -->
+    <!-- 세션 기반 인증에서 사용한다. Spring Security는 필터를 사용하므로 Spring Security사용시 주석 처리
 	<interceptors>
         <interceptor>
             <mapping path="/board/*.do" />
@@ -59,6 +60,7 @@
             <beans:bean class="com.foo.myapp.common.interceptor.AuthenticInterceptor" />
         </interceptor>
     </interceptors>
+    -->
 
     <!-- 파일 업로드를 위한 설정 -->
     <beans:bean id="spring.RegularCommonsMultipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

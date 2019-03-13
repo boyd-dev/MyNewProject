@@ -27,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.foo.myapp.board.service.BoardVO;
 import com.foo.myapp.board.service.IBoardService;
 import com.foo.myapp.board.service.SearchBoardVO;
+import com.foo.myapp.common.auth.UserDetailsHelper;
 import com.foo.myapp.common.file.service.AtchFileVO;
 import com.foo.myapp.common.file.service.FileVO;
 import com.foo.myapp.common.file.service.IFileMngService;
@@ -113,7 +114,8 @@ public class BoardFileController {
 	public String boardSaveFile(MultipartHttpServletRequest multipartReq, Model model, HttpSession session) throws Exception {
 
 		String userId = "";
-		LoginVO loginVO = (LoginVO)session.getAttribute("userInfo");
+		LoginVO loginVO = (LoginVO) UserDetailsHelper.getAuthenticatedUser();
+
 		if (loginVO != null) {
 			userId = loginVO.getMberId();
 		}
@@ -170,7 +172,8 @@ public class BoardFileController {
 			                         HttpSession session) throws Exception {
 
 
-		LoginVO loginVO = (LoginVO)session.getAttribute("userInfo");
+		LoginVO loginVO = (LoginVO) UserDetailsHelper.getAuthenticatedUser();
+
 		if (loginVO != null) {
 			boardVO.setAuthorId(loginVO.getMberId());
 		}
@@ -285,7 +288,8 @@ public class BoardFileController {
 			if (atchFileId != null) boardVO.setAtchFileId(atchFileId); //마스터 테이블에도 이 정보가 필요하다.
 		}
 
-		int result = service.updateBoardContent(boardVO, (LoginVO)session.getAttribute("userInfo"));
+		LoginVO loginVO = (LoginVO) UserDetailsHelper.getAuthenticatedUser();
+		int result = service.updateBoardContent(boardVO, loginVO);
 
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("UPDATE=" + result);
@@ -299,8 +303,10 @@ public class BoardFileController {
 	public String boardDelete(@ModelAttribute("postVO") BoardVO boardVO, Model model, HttpSession session) throws Exception {
 
 		//TODO 디스크의 물리적인 파일도 삭제한다.
+		//
 
-		int result = service.deleteBoard(boardVO, (LoginVO)session.getAttribute("userInfo"));
+		LoginVO loginVO = (LoginVO) UserDetailsHelper.getAuthenticatedUser();
+		int result = service.deleteBoard(boardVO, loginVO);
 
 		if (LOGGER.isDebugEnabled()) {
 			LOGGER.debug("DELETE=" + result);

@@ -2,6 +2,12 @@ package com.foo.myapp.login.service;
 
 import java.io.Serializable;
 
+/**
+ * 사용자가 로그인 후에 유지하는 정보
+ *
+ * @author foo
+ *
+ */
 public class LoginVO  implements Serializable {
 
 	/**
@@ -23,6 +29,12 @@ public class LoginVO  implements Serializable {
 	 * 비밀번호
 	 */
 	private String passwd;
+
+
+	/**
+	 * 이메일
+	 */
+	private String mberEmail;
 
 
 	public String getPasswd() {
@@ -47,6 +59,14 @@ public class LoginVO  implements Serializable {
 
 	public void setMberNm(String mberNm) {
 		this.mberNm = mberNm;
+	}
+
+	public String getMberEmail() {
+		return mberEmail;
+	}
+
+	public void setMberEmail(String mberEmail) {
+		this.mberEmail = mberEmail;
 	}
 
 

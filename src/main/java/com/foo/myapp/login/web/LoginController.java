@@ -18,7 +18,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.foo.myapp.login.service.ILoginService;
 import com.foo.myapp.login.service.LoginVO;
 
-
+/**
+ * Spring Security의 필터가 인증 정보를 처리하므로 이 컨트롤러는 사용하지 않는다.
+ *
+ * @author kim
+ *
+ */
+@Deprecated
 @Controller
 public class LoginController {
 
@@ -31,6 +37,7 @@ public class LoginController {
 	private MessageSource messageSource;
 
 
+	/* Spring Security를 사용하므로 주석처리함
 	@RequestMapping(value="/login.do", method=RequestMethod.GET)
 	public String loginUsrView(@ModelAttribute("loginVO") LoginVO loginVO, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		return "/login/userLogin";
@@ -75,6 +82,7 @@ public class LoginController {
 
 		return "redirect:/";
 	}
+	*/
 
 
 
