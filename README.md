@@ -60,9 +60,10 @@ Sign-up 화면에서 사용자등록 후 로그인해서 게시판에 글을 작
 
 **변경이력** ⛏  
 
+2019.03.13  
+Spring Security 4.0.3을 적용하여 인증 처리를 구현하였습니다. 로그인/아웃 화면도 기본화면을, 인증 provider는 UserDetailsService 인터페이스의 구현체를 사용하여 JDBC방식으로 하였습니다. 기존 master 브랜치는 유지하고 [security](https://github.com/boyd-dev/MyNewProject/tree/security) 브랜치를 만들었습니다. 
+
 2019.02.28  
 사용자등록(Sign-up)을 간단한 plain JPA로 구현한 예제를 추가하였습니다(UserController참조).
 
-2019.03.13  
-Spring Security 4.0.3을 적용하여 인증 처리를 구현하였습니다. 로그인/아웃 화면도 기본화면을, 인증 provider는 UserDetailsService 인터페이스의 구현체를 사용하여 JDBC방식으로 하였습니다. 기존 master 브랜치는 유지하고 [security](https://github.com/boyd-dev/MyNewProject/tree/security) 브랜치를 만들었습니다. 
 
