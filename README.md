@@ -59,6 +59,8 @@ Sign-up 화면에서 사용자등록 후 로그인해서 게시판에 글을 작
 학습 목적 외의 용도로 사용하여 발생하는 모든 문제는 책임지지 않습니다.😅
 
 **변경이력** ⛏  
+2019.03.31  
+Spring Security OAuth2 2.0.12을 적용하여 OAuth2 클라이언트 인증 구현하였습니다. [oauth2](https://github.com/boyd-dev/MyNewProject/tree/oauth2) 브랜치를 참조하십시오.
 
 2019.03.13  
 Spring Security 4.0.3을 적용하여 인증 처리를 구현하였습니다. 로그인/아웃 화면은 기본으로 제공되는 화면을, 인증 provider는 UserDetailsService 인터페이스의 구현체로 JDBC방식을 사용합니다. 기존 master 브랜치는 유지하고 별도로 [security](https://github.com/boyd-dev/MyNewProject/tree/security) 브랜치를 만들었습니다.
