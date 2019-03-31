@@ -8,7 +8,7 @@
 
 다음 글을 참고하시면 도움이 됩니다.😄
 
-[lorenzo-dee blog](http://lorenzo-dee.blogspot.com/2016/08/spring-security-oauth2-with-google.html)
+[lorenzo-dee blog](http://lorenzo-dee.blogspot.com/2016/08/spring-security-oauth2-with-google.html)  
 [Using OAuth 2.0 for Web Server Applications](https://developers.google.com/identity/protocols/OAuth2WebServer)  
 
 
