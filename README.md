@@ -59,6 +59,7 @@ Sign-up 화면에서 사용자등록 후 로그인해서 게시판에 글을 작
 학습 목적 외의 용도로 사용하여 발생하는 모든 문제는 책임지지 않습니다.😅
 
 **변경이력** ⛏  
+
 2019.03.31  
 Spring Security OAuth2 2.0.12을 적용하여 OAuth2 클라이언트 인증 구현하였습니다. [oauth2](https://github.com/boyd-dev/MyNewProject/tree/oauth2) 브랜치를 참조하십시오.
 
