@@ -14,16 +14,16 @@
 </head>
 <body>
 <h1>
-	Hello world! (Spring Security)
+	Hello world! (Spring Security OAuth2)
 </h1>
 
 <p>  The time on the server is ${serverTime}. </p>
 
 <br/>
-<a href="<c:url value='/login' />"><b>[SIGN-IN]</b></a>
+<!-- <a href="<c:url value='/login' />"><b>[SIGN-IN]</b></a> -->
+<a href="<c:url value='/oauth2/commence' />"><b>[SIGN-IN with Google]</b></a>
 <br/><br/>
-Want to join? click <a href="<c:url value='/signup.do'/>">[SIGN-UP]</a>
-
+<!-- Want to join? click <a href="<c:url value='/signup.do'/>">[SIGN-UP]</a> -->
 
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.foo.myapp;
 
+import java.security.Principal;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -10,9 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import com.foo.myapp.common.auth.UserDetailsHelper;
-import com.foo.myapp.login.service.LoginVO;
 
 
 /**
@@ -35,19 +33,18 @@ public class HomeController {
 
 		String formattedDate = dateFormat.format(date);
 
-		model.addAttribute("serverTime", formattedDate );
+		model.addAttribute("serverTime", formattedDate);
 
 		return "home";
 	}
 
 
 	@RequestMapping(value="/main.do")
-    public String mainPage() {
+    public String mainPage(Principal principal) {
 
-		LoginVO loginVO = (LoginVO) UserDetailsHelper.getAuthenticatedUser();
-		logger.debug("USER NAME=" + loginVO.getMberNm());
-		UserDetailsHelper.getAuthorities().forEach(auth -> logger.debug(auth));
-
+		if (principal != null) {
+			logger.debug(principal.toString());
+		}
 
 		return "main";
     }
@@ -58,4 +55,5 @@ public class HomeController {
     public String signUpPage() {
 		return "signup";
     }
+
 }

@@ -60,7 +60,6 @@
 
 	function fn_save() {
 		var data = CKEDITOR.instances.editor1.getData();
-		console.log(data);
 		document.frm.cnttPost.value = data;
 		document.frm.action = "<c:url value='/board/boardSave.do'/>";
 		gfn_csrf_submit('${_csrf.parameterName}', '${_csrf.token}');

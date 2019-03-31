@@ -34,6 +34,8 @@ public class SecurityUserDetailsServiceImpl implements IUserDetailsService {
 			return null;
 		}
 
+		LOGGER.debug(context.getAuthentication().getPrincipal().toString());
+
 		//CutomUserDetails로부터 사용자 인증 정보를 리턴한다.
 		CustomUserDetails userInfo = (CustomUserDetails) context.getAuthentication().getPrincipal();
 		return userInfo.getLoginVO();

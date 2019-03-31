@@ -46,7 +46,7 @@ public class GoogleSuccessLogoutHandler extends SimpleUrlLogoutSuccessHandler {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-		/*
+		/* postForObject는 HTTP status code를 알 수 없다.
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		params.add("token", accessToken);
 
@@ -59,6 +59,7 @@ public class GoogleSuccessLogoutHandler extends SimpleUrlLogoutSuccessHandler {
 		}
 		*/
 
+	    //exchange는 HTTP status code 리턴
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		params.add("token", accessToken);
 		RestOperations restTemplate = new RestTemplate();
@@ -75,8 +76,6 @@ public class GoogleSuccessLogoutHandler extends SimpleUrlLogoutSuccessHandler {
 
 		super.onLogoutSuccess(request, response, authentication);
 	}
-
-
 
 }
 

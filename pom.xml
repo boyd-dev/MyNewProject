@@ -11,6 +11,7 @@
 		<java-version>1.8</java-version>
 		<org.springframework-version>4.2.4.RELEASE</org.springframework-version>
 		<org.springsecurity-version>4.0.3.RELEASE</org.springsecurity-version>
+		<org.springoauth2-version>2.0.12.RELEASE</org.springoauth2-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
 	</properties>
@@ -287,6 +288,26 @@
 	        <artifactId>spring-security-config</artifactId>
 	        <version>${org.springsecurity-version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>${org.springsecurity-version}</version>
+        </dependency>
+
+        <!-- Spring Security OAuth2 -->
+        <dependency>
+            <groupId>org.springframework.security.oauth</groupId>
+            <artifactId>spring-security-oauth2</artifactId>
+            <version>${org.springoauth2-version}</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.google.collections/google-collections -->
+        <dependency>
+            <groupId>com.google.collections</groupId>
+            <artifactId>google-collections</artifactId>
+            <version>1.0-rc2</version>
+        </dependency>
+
 
 
 		<!-- Test -->

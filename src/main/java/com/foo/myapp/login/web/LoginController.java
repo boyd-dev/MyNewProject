@@ -1,5 +1,7 @@
 package com.foo.myapp.login.web;
 
+import java.security.Principal;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,30 +13,56 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.foo.myapp.login.service.ILoginService;
 import com.foo.myapp.login.service.LoginVO;
+import com.foo.myapp.utils.GlobalProperties;
 
 /**
- * Spring Security의 필터가 인증 정보를 처리하므로 이 컨트롤러는 사용하지 않는다.
  *
  * @author kim
  *
  */
-@Deprecated
+
 @Controller
 public class LoginController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
 
-	@Resource(name = "loginService")
-	private ILoginService loginService;
-
 	@Resource(name="messageSource")
 	private MessageSource messageSource;
+
+    //테스트
+	@RequestMapping(value="/login/{social}")
+    public String loginSocial(@PathVariable String social) {
+
+		String url = "/";
+		String scope = "";
+		String response_type = "";
+		String client_id = "";
+		String redirect_uri = "";
+
+		if (social.equals("google")) {
+
+	        scope = GlobalProperties.getProperty("oauth2.scope");
+	        response_type = "code";
+	        client_id = GlobalProperties.getProperty("oauth2.clientId");
+	        redirect_uri = GlobalProperties.getProperty("oauth2.filterCallbackPath");
+
+	        url = GlobalProperties.getProperty("oauth2.userAuthorizationUri") + "?scope=" + scope
+			                                                                  + "&response_type=" + response_type
+			                                                                  + "&client_id=" + client_id
+			                                                                  + "&redirect_uri=" + redirect_uri;
+		}
+
+		LOGGER.debug(url);
+
+		return "redirect:" + url;
+    }
 
 
 	/* Spring Security를 사용하므로 주석처리함

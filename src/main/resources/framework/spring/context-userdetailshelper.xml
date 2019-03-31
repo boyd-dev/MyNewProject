@@ -6,7 +6,7 @@
 	<!-- 인증, 권한 등의 정보를 확인 할 수있는 서비스 설정-->
 	<bean id="userDetailsHelper" class="com.foo.myapp.common.auth.UserDetailsHelper">
         <property name="userDetailsService">
-            <ref bean="securityUserDetailsService" />
+            <ref bean="securityOAuthUserDetailsService" />
         </property>
     </bean>
 
@@ -16,7 +16,11 @@
     <!-- 1. 세션을 이용한 인증을 사용하는 빈 -->
     <!-- <bean id="sessionUserDetailsService" class="com.foo.myapp.common.auth.service.SessionUserDetailsServiceImpl"/> -->
 
-    <!-- 2. 스프링 시큐리티를 이용한 인증을 사용할 빈 -->
+    <!-- 2. 스프링 시큐리티를 이용한 인증을 사용하는 빈 -->
     <bean id="securityUserDetailsService" class="com.foo.myapp.common.auth.service.SecurityUserDetailsServiceImpl"/>
+
+    <!-- 3. 스프링 시큐리티 OAuth2 인증을 사용하는 빈 -->
+    <bean id="securityOAuthUserDetailsService" class="com.foo.myapp.common.auth.service.SecurityOAuthUserDetailsServiceImpl"/>
+
 
 </beans>
